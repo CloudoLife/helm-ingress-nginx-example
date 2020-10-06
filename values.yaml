@@ -1,0 +1,74 @@
+
+# ingress-nginx/values.yaml at master · kubernetes/ingress-nginx
+# https://github.com/kubernetes/ingress-nginx/blob/master/charts/ingress-nginx/values.yaml
+
+# helm install stable/nginx-ingress --set controller.hostNetwork=true,controller.service.type="",controller.kind=DaemonSet
+# https://medium.com/@craignewtondev/how-to-fix-kubernetes-namespace-deleting-stuck-in-terminating-state-5ed75792647e
+
+## nginx configuration
+## Ref: https://github.com/kubernetes/ingress/blob/master/controllers/nginx/configuration.md
+##
+controller:
+
+  # Required for use with CNI based kubernetes installations (such as ones set up by kubeadm),
+  # since CNI and hostport don't mix yet. Can be deprecated once https://github.com/kubernetes/kubernetes/issues/23920
+  # is merged
+  hostNetwork: true
+
+  # DaemonSet or Deployment
+  #
+  kind: DaemonSet
+
+  service:
+
+    type: "ClusterIP"
+
+  dnsPolicy: "ClusterFirstWithHostNet"
+
+  # ## Node tolerations for server scheduling to nodes with taints
+  # ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  # ##
+  # tolerations:
+  #   - operator: "Exists"
+
+  # Node labels for default backend pod assignment
+  # Ref: https://kubernetes.io/docs/user-guide/node-selection/
+  #
+  nodeSelector:
+    kubernetes.io/hostname: <Your Host Name> 
+
+  # affinity:
+  #   podAntiAffinity:
+  #       requiredDuringSchedulingIgnoredDuringExecution:
+  #       - labelSelector:
+  #           matchExpressions:
+  #           - key: app
+  #             operator: In
+  #             values:
+  #             - nginx-ingress
+  #           - key: component
+  #             operator: In
+  #             values:
+  #             - controller
+  #         topologyKey: kubernetes.io/hostname
+  # tolerations:
+  #     - key: node-role.kubernetes.io/master
+  #       operator: Exists
+  #       effect: NoSchedule
+  #     - key: node-role.kubernetes.io/master
+  #       operator: Exists
+  #       effect: PreferNoSchedule
+# ## Default 404 backend
+# ##
+# defaultBackend:
+#   ##
+#   enabled: true
+
+#   tolerations:
+#     - operator: "Exists"
+
+#   nodeSelector:
+#     kubernetes.io/hostname: atyun-centos-k8s200.servers.atyun.com.cn
+
+  admissionWebhooks:
+    enabled: false
