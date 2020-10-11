@@ -4,6 +4,8 @@ ingress-nginx is an Ingress controller for Kubernetes using NGINX as a reverse p
 
 You can modify it and use ingress-nginx. There is example about installing it with Helm in the article.
 
+<!-- more -->
+
 ## Prerequisites
 
 - [Kubernetes(K8S)](https://kubernetes.io/)
@@ -127,15 +129,16 @@ See Helm release about ingress-nginx.
 
 ```shell
 $ helm list -n ingress-nginx
-NAME                       	NAMESPACE   	REVISION	UPDATED                               	STATUS  	CHART                            	APP VERSION
-ingress-nginx	ingress-nginx	1       	2020-09-25 12:57:30.168666 +0800 +0800	deployed	webhook-alidns-0.1.0             	1.0
+NAME         	NAMESPACE    	REVISION	UPDATED                               	STATUS  	CHART              	APP VERSION
+ingress-nginx	ingress-nginx	2       	2020-09-27 00:29:42.437531 +0800 +0800	deployed	ingress-nginx-3.3.0	0.35.0
 ```
 
 See pods about ingress-nginx.
 
 ```shell
 $ kubectl get pods -n ingress-nginx
-...
+NAME                             READY   STATUS    RESTARTS   AGE
+ingress-nginx-controller-jz4ph   1/1     Running   4          13d
 ```
 
 ## References
